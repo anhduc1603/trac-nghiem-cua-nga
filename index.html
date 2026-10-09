@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trắc nghiệm Văn hóa 2026</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--text:#1d2433;--muted:#667085;--line:#e3e7ef;
+  --primary:#2f5bea;--primary-soft:#e8eeff;
+  --ok:#16a34a;--ok-bg:#dcfce7;--bad:#dc2626;--bad-bg:#fee2e2;--warn:#d97706;--warn-bg:#fef3c7;
+  --sel:#2f5bea;--sel-bg:#e8eeff;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0f1420;--card:#182031;--text:#e6e9f0;--muted:#98a2b3;--line:#2a344a;
+  --primary:#6b8cff;--primary-soft:#1f2a47;--ok:#4ade80;--ok-bg:#12331f;--bad:#f87171;--bad-bg:#3b1515;
+  --warn:#fbbf24;--warn-bg:#3a2c0d;--sel:#6b8cff;--sel-bg:#1f2a47;}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:980px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+header h1{font-size:20px;margin:0}
+.btn{border:1px solid var(--line);background:var(--card);padding:8px 14px;border-radius:10px}
+.btn:hover{border-color:var(--primary)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.mode h2{margin:0 0 6px;font-size:20px}
+.mode p{margin:0 0 14px;color:var(--muted)}
+.mode ul{margin:0 0 16px;padding-left:18px;color:var(--muted);font-size:14px}
+.field{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0;font-size:15px}
+.field select,.field input[type=number]{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);width:110px}
+.layout{display:grid;grid-template-columns:1fr 260px;gap:16px;align-items:start}
+@media (max-width:760px){.layout{grid-template-columns:1fr}}
+.qhead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-size:12px;font-weight:600}
+.qtext{font-size:18px;font-weight:600;white-space:pre-line;margin:0 0 16px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--card);white-space:pre-line;transition:border-color .12s,background .12s}
+.opt:hover:not(:disabled){border-color:var(--primary)}
+.opt:disabled{cursor:default}
+.opt .k{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--bg);border:1px solid var(--line)}
+.opt.sel{border-color:var(--sel);background:var(--sel-bg)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .k{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .k{background:var(--bad);color:#fff;border-color:var(--bad)}
+.opt.miss{border-color:var(--ok);border-style:dashed}
+.msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-weight:600}
+.msg.ok{background:var(--ok-bg);color:var(--ok)}
+.msg.bad{background:var(--bad-bg);color:var(--bad)}
+.msg.warn{background:var(--warn-bg);color:var(--warn)}
+.nav{display:flex;justify-content:space-between;gap:8px;margin-top:16px;flex-wrap:wrap}
+.side h3{margin:0 0 10px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:6px}
+.cell{height:36px;border-radius:8px;border:1px solid var(--line);background:var(--bg);font-size:13px;font-weight:600}
+.cell.cur{outline:2px solid var(--primary);outline-offset:1px}
+.cell.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.cell.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.cell.done{background:var(--primary);color:#fff;border-color:var(--primary)}
+.stats{display:flex;gap:12px;flex-wrap:wrap;font-size:14px;margin:12px 0;color:var(--muted)}
+.stats b{color:var(--text)}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px}
+.timer.low{color:var(--bad)}
+.score{text-align:center;padding:10px 0 4px}
+.score .big{font-size:44px;font-weight:800}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.hint{color:var(--muted);font-size:13px;margin-top:12px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📘 Trắc nghiệm Văn hóa VIMERS 2026</h1>
+    <button class="btn hidden" id="homeBtn">← Trang chủ</button>
+  </header>
+
+  <!-- HOME -->
+  <section id="home" class="home">
+    <div class="card mode">
+      <h2>📖 Chế độ Học tập</h2>
+      <p>Chọn đáp án là biết ngay đúng/sai.</p>
+      <ul>
+        <li>Đúng: đáp án tô <b style="color:var(--ok)">xanh</b></li>
+        <li>Sai: đáp án chọn tô <b style="color:var(--bad)">đỏ</b>, hiện đáp án đúng màu xanh</li>
+        <li>Tiến độ được lưu lại trên máy</li>
+      </ul>
+      <div class="field"><label for="studyOrder">Thứ tự câu</label>
+        <select id="studyOrder"><option value="seq">Theo đề</option><option value="rand">Ngẫu nhiên</option></select></div>
+      <div class="field"><label for="studyShuffle">Trộn đáp án</label><input type="checkbox" id="studyShuffle"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn primary" id="studyStart">Học tiếp</button>
+        <button class="btn" id="studyWrong">Ôn câu sai</button>
+        <button class="btn" id="studyReset">Học lại từ đầu</button>
+      </div>
+      <div class="hint" id="studyInfo"></div>
+    </div>
+    <div class="card mode">
+      <h2>📝 Chế độ Thi</h2>
+      <p>Làm hết rồi nộp bài mới xem kết quả.</p>
+      <ul>
+        <li>Có đồng hồ đếm ngược, hết giờ tự nộp</li>
+        <li>Sau khi nộp: xem lại từng câu đúng/sai</li>
+      </ul>
+      <div class="field"><label for="examCount">Số câu</label><select id="examCount"></select></div>
+      <div class="field"><label for="examTime">Thời gian (phút)</label><input type="number" id="examTime" min="1" max="300" value="35"></div>
+      <div class="field"><label for="examShuffleQ">Trộn câu hỏi</label><input type="checkbox" id="examShuffleQ" checked></div>
+      <div class="field"><label for="examShuffleO">Trộn đáp án</label><input type="checkbox" id="examShuffleO"></div>
+      <div class="row" style="margin-top:14px"><button class="btn primary" id="examStart">Bắt đầu thi</button></div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="layout hidden">
+    <div class="card">
+      <div class="qhead">
+        <span><span class="tag" id="modeTag"></span> &nbsp;Câu <b id="pos"></b> / <span id="total"></span> <span id="orig"></span></span>
+        <span class="timer hidden" id="timer"></span>
+      </div>
+      <p class="qtext" id="qtext"></p>
+      <div class="opts" id="opts"></div>
+      <div id="msg"></div>
+      <div class="nav">
+        <button class="btn" id="prev">← Câu trước</button>
+        <button class="btn primary hidden" id="check">Kiểm tra</button>
+        <button class="btn" id="next">Câu sau →</button>
+      </div>
+      <div class="hint">Phím tắt: A–E hoặc 1–5 để chọn · ← → chuyển câu · Enter kiểm tra</div>
+    </div>
+    <aside class="card side">
+      <h3 id="sideTitle">Danh sách câu</h3>
+      <div class="stats" id="stats"></div>
+      <div class="grid" id="grid"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn primary hidden" id="submit" style="width:100%">Nộp bài</button>
+      </div>
+    </aside>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="card hidden">
+    <div class="score">
+      <div class="big" id="scoreBig"></div>
+      <div id="scoreSub" style="color:var(--muted)"></div>
+    </div>
+    <div class="row" style="justify-content:center;margin-top:16px">
+      <button class="btn primary" id="review">Xem lại bài làm</button>
+      <button class="btn" id="retry">Thi lại</button>
+    </div>
+  </section>
+</div>
+
+<script>
+const DATA = [{"n":1,"q":"Quý là nhân viên kinh doanh. Cuối quý, Quý còn thiếu 15% chỉ tiêu. Một khách hàng đề nghị ký hợp đồng với điều kiện VIMERS cam kết giao hàng trong 24h - điều này vượt quá năng lực hiện tại của chi nhánh. Quý vẫn ký hợp đồng với khách hàng. Sau khi ký xong, Quý lấy lý do chi nhánh đang nhập xe về, báo khách hàng kiên nhẫn chờ thêm thời gian nữa để chi nhánh sắp xếp. Quý đã không thể hiện giá trị cốt lõi nào của Người VIMERS?","o":["Tự chủ","Tín nhiệm","Tin cậy","Giá trị"],"a":[2]},{"n":2,"q":"Mẫn là nhân viên kinh doanh online CN, chịu trách nhiệm bán các dòng xe tải hạng nhẹ của công ty. Trong giai đoạn thị trường đi xuống, các đồng nghiệp trong phòng kinh doanh có đề xuất những phương án phối hợp để cùng truyền thông cho sản phẩm nhằm tiếp cận với khách hàng tốt hơn. Tuy nhiên Mẫn hời hợt và lười biếng, không muốn phối hợp cùng đồng nghiệp để vượt qua giai đoạn này. Mẫn đã không thể hiện được chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta uy tín thực hiện mọi cam kết","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả"],"a":[1]},{"n":3,"q":"Theo giá trị Chia sẻ trong số tay văn hoá. VIMERS, sau khi sự nghiệp thành công rồi, một Người VIMERS sẽ cho đi thứ gì?","o":["Trí tuệ","Trí huệ","Tri thức","Trí thông minh"],"a":[0]},{"n":4,"q":"Phối hợp, nỗ lực hiệu quả, Khả năng tạo kết quả hiệu quả, Tự chịu trách nhiệm và Nhẫn nại đến cùng, đam mê quyết liệt là bốn bài học hành vi từ giá trị nào của VIMERS?","o":["Giá trị","Tin cậy","Tự chủ","Trí tuệ"],"a":[2]},{"n":5,"q":"Nhi là nhân viên đào tạo, được giao nhiệm vụ chốt nội dung chỉnh sửa tài liệu đào tạo với các phòng ban, chi nhánh. Nhận thấy nhiều phòng ban chậm trễ và không hợp tác, Nhi đã tích cực tìm nhiều cách để liên lạc với họ như: gặp mặt trực tiếp, gọi điện, nhắn tin Zalo, Teams, VIMERS Chat... Nhi đã thể hiện được giá trị cốt lõi nào của Người VIMERS?","o":["Chia sẻ","Tự chủ","Cân bằng","Trí tuệ"],"a":[1]},{"n":7,"q":"Theo giá trị Chia sẻ trong sổ tay văn hoá VIMERS, khi đã có người (thương) rồi, một Người VIMERS sẽ cho đi thứ gì?","o":["Sự tử tế","Sự trách nhiệm","Tiền tài","Sự yêu thương"],"a":[3]},{"n":8,"q":"Giá trị trong bài học hành vi \"Gia tăng giá trị - Kết quả vượt mong đợi\" theo sổ tay Văn hoá VIMERS bao gồm?","o":["Giá trị cho gia đình, đồng nghiệp và khách hàng","Giá trị cho bản thân, gia đình, bạn bè, đồng nghiệp và khách hàng","Giá trị cho bản thân, gia đình, đồng nghiệp và khách hàng","Giá trị cho bản thân, gia đình, bạn bè, hàng đồng nghiệp và khách hàng"],"a":[2]},{"n":9,"q":"Theo quy tắc \"Chúng ta uy tín thực hiện mọi cam kết\", chúng ta không tạo dựng quan hệ bằng thủ thuật ngoại giao, chúng ta chủ động phân tích mọi điểm mạnh, điểm yếu của sản phẩm để minh bạch thông tin, giúp khách hàng nắm được tường tận nhất về sản phẩm. Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":10,"q":"Đâu không phải một nội dung trong Sổ tay văn hoȧ VIMERS?","o":["Giới thiệu về Người VIMERS","Hệ tư tưởng Người VIMERS","Nhóm hành vi từ giá trị Người VIMERS","Nhóm hành vi từ chuẩn mực đạo đức của Người VIMERS"],"a":[3]},{"n":11,"q":"Chúng ta tuyệt đối không sử dụng trang mạng xã hội sai quy định trong thời gian làm việc. Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":12,"q":"Đâu không phải một hành động mà VIMERS 2.0 (2021-2030) hưởng đến?","o":["Kế thừa và phát huy những thành quả đạt được trong giai đoạn 1.0, toàn VIMERS ý thức hơn bao giờ hết trách nhiệm của mình với tổ chức, với bản thân, gia đình và xã hội.","Tự chủ, chủ động thực hiện những công việc, nhiệm vụ được giao thôi chưa đủ, mà phải chủ động đề xuất, GIÀNH LẤY cơ hội, công việc, cùng với tìm tòi, nghiên cứu, học hỏi, nâng cao tri thức, cải tiến đổi mới các giải pháp nhằm gia tăng hơn nữa GIÁ TRỊ của mình cho khách hàng, cho tổ chức, cũng chính là khẳng định GIÁ TRỊ của mình trong tổ chức, trong xã hội.","Giải pháp vận tải An toàn – Hiệu quả đã tương đối đầy đủ, nhưng còn phải nâng cao hơn nữa khả năng kết nối, tạo thêm nhiều hơn nữa những giá trị mang lại cho khách hàng trong thời đại số, thời đại của sự kết nối 360 độ với mọi đối tượng."],"a":[2]},{"n":13,"q":"Đâu là tác hại của việc không thực hiện theo bài học hành vi \"Gia tăng giá trị - Kết quả vượt mong đợi\" theo số tay văn hoá VIMERS?","o":["Nếu không biết nỗ lực, tạo giá trị, làm việc có mục tiêu, thì năng lực của chúng ta sẽ không vươn cao; Ai mà không biết tự lượng sức mình, ôm quá nhiều việc lớn thì sẽ gây phản tác dụng, làm giảm giá trị của mình","Nếu không biết nỗ lực, làm việc có mục tiêu, thì năng lực của chúng ta sẽ không vươn cao; Ai mà không biết điều, ôm quá nhiều việc ngoài công việc của mình thì sẽ gây phản tác dụng, phản cảm, làm giảm giá trị của mình","Nếu không biết nỗ lực, làm việc có mục tiêu, thì năng lực của chúng ta sẽ vươn cao; Ai mà không biết tự lượng sức mình, ôm quá nhiều việc lớn thi sẽ gây phản tác dụng, phản cảm, làm giảm giá trị của mình","Nếu không biết nỗ lực, tạo giá trị, làm việc có mục tiêu, thì năng lực của chúng không vươn cao; Ai mà không biết phần sau, dám nhận thêm nhiệm vụ, dám tạo giá trị vượt NT công việc của mình thì sẽ tư đánh mất cơ hội"],"a":[3]},{"n":14,"q":"Khách hàng gọi đến hotline CSKH của bạn lần thứ 3 về cùng một vấn đề chưa được giải quyết. Ở lần gọi thứ 3, bạn sẽ làm gì?","o":["Khi họ vừa gọi đến và chưa mở lời, bạn chủ động tóm tắt lại vấn đề và tình hình giải quyết hiện tại để họ nắm thông tin sớm và không mất công giải thích nữa","Khi họ vừa gọi đến, bạn lắng nghe họ, sau đó xin lỗi nếu có vấn đề đến từ phía mình, cập nhật cho họ tiến độ xử lý của bên mình và các biện pháp tiếp theo","Khi họ vừa gọi đến và chưa mở lời, bạn nhanh chóng nói với họ rằng mình đã nắm được vấn\nđề của họ, và ngay lập tức cập nhật cho họ tiến độ xử lý của bên mình","Khi họ vừa gọi đến và chưa mở lời, bạn nói với họ rằng mình đã nắm được vấn đề của họ, và\nngay lập tức cập nhật cho họ tiến độ xử lý của bên mình, thuyết phục họ kiên nhẫn chờ thêm và đợi phản hồi bên mình"],"a":[1]},{"n":15,"q":"Theo chuẩn mực đạo đức \"Chúng ta cân bang và công bằng trong mọi tình huống\", khi một nhân viên có tính cách nóng nảy, thường xuyên gây mâu thuẫn trong hội họp, là một QLTT bạn sẽ tìm mọi cách để thay đổi tính cách của nhân viên đó, nếu thuận lợi, bạn sẽ xây lộ trình thăng tiến cho họ. Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":16,"q":"Chọn đáp án sai (có thể chọn nhiều đáp án). Khi bắt tay trong kinh doanh chúng ta cần:","o":["Dùng một tay phải để bắt tay, mắt nhìn thẳng vào mắt người đối diện","Khi bắt tay, hơi cúi người thể hiện sự tôn trọng","Khi bắt tay, cần nắm chặt bàn tay người đối diện để thể hiện sự nồng ấm","Khi gặp người lớn tuổi cần có thái độ kín trọng, bắt hai tay hoặc dùng tay phải đi tay trái bắt tay","Bắt tay lần lượt theo thứ tự người có chức vụ cao hơn, người lớn tuổi hơn."],"a":[1,2]},{"n":17,"q":"Ngày hội gia đình, một nhân viên đảm nhận đã tự ý tăng ngân sách dự kiến của từng hạng mục lên 500.000₫, và cấu kết với NCC để chia hoa hồng. Hành động của nhân viên đó đã vi phạm chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta uy tín thực hiện mọi cam kết","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam"],"a":[1]},{"n":18,"q":"“Tôn trọng sự khác biệt - Cùng hướng đến mục tiêu chung\" là bài học hành vi được phóng chiếu từ giá trị cốt lõi nào của VIMERS?","o":["Tư chủ","Tin cậy","Giá trị","Cân bằng"],"a":[1]},{"n":19,"q":"Bạn là chuyên viên R&D ban sản phẩm. Vài lần bạn nhận được phản hồi từ phòng kinh doanh rằng có vài khách hàng mong muốn chìa khoá thông minh (smartkey) đi kèm xe tải Howo NX240 có thể gửi tín hiệu cho xe tải ở khoảng cách xa hơn 5-7m. Tuy nhiên, bạn không muốn liên hệ với nhà cung cấp, nên bạn nói với phòng kinh doanh bảo khách hàng nên tự liên hệ, vì đây là phần thiết kế cá nhân hoá, và những phản phát triển phức tạp như vậy thì khách hàng nên làm việc trực tiếp với nhà sản xuất. Bạn đã không thể hiện giá trị cốt lõi nào của Người VIMERS?","o":["Chúng ta cân bằng và công bằng trong mọi tình huống","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam","Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả","Chúng ta tiên phong bước vào kỷ nguyên mới"],"a":[2]},{"n":20,"q":"Nam và My cùng ứng tuyến vào một vị trí công việc, khả năng của hai bạn được hội đồng tuyển dụng đánh giá là rất tốt, tuy nhiên Nam có chênh hơn. Vì My có người quen trong công ty nên đã nắm được tình hình. Sau ngày phỏng vấn, My có mang một giỏ hoa quả đến nhà của OLTT, ngỏ ý xin được \"sắp xếp\" để nhận việc. Hành động của My đã không thể hiện chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta cân bằng và công bằng trong mọi tình huống","Chúng ta tôn trọng tính cách cá nhân","Chúng ta có thiên ý hợp tác bền vững với đối tác, khách hàng"],"a":[1]},{"n":21,"q":"Hằng nhận thấy phòng ban mình hay phải làm báo cáo thủ công, tốn nhiều thời gian. Hằng quyết định đề xuất dùng Power Query để xây một báo cáo tự động cho phòng dùng. Sau khi được QLTT phê duyệt, Hằng đã tiến hành xây cho phòng. Hành động của Hằng đã thể hiện chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta cởi mở để không còn khoảng cách","Chúng ta tiên phong bước vào kỷ nguyên mới"],"a":[2]},{"n":22,"q":"Phòng Giải pháp công nghệ đang phát triển phần mềm nội bộ CKM giúp tích hợp dữ liệu khách hàng, thuận tiện trong việc theo dõi khách hàng dành cho Phòng Kinh doanh, CSKH và Dịch vụ. Phòng Giải pháp công nghệ đang thực hiện quy tắc nào sau đây của VIMERS?","o":["Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam","Chúng ta tiên phong bước vào kỷ nguyên mới","Chúng ta cam kết kinh doanh bằng sự tử tế"],"a":[2]},{"n":23,"q":"Khi lập kế hoạch dự tính ngân sách cho sự kiện Ngày hội gia đình, một nhân viên đảm nhận đã tự ý tăng ngân sách dự kiến của từng hạng mục lên 500.000₫, và cấu kết với NCC để chia hoa hồng. Hành động của nhân viên đó đã vi phạm chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta uy tín thực hiện mọi cam kết","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam"],"a":[1]},{"n":24,"q":"Đâu là các lưu ý khi giao tiếp email? Chọn đáp án Sai.","o":["Mở đầu email có lời chào theo thứ tự ưụ tiên: tuổi tác, chức vụ","Trả lời email kịp thời trong vòng 24 tiếng","Luôn có chữ ký email","Chỉ khi nào cần cho người khác biết mới ấn \"reply all\" (trả lời tất cả)"],"a":[2]},{"n":25,"q":"Anh Thái là trưởng bộ phận làm việc lâu năm, 6 năm nữa đến tuổi nghỉ hưu. Năm nay có một bạn trưởng nhóm mới vào, năng lực rất tốt, và được các sếp xây lộ trình nhân sự nguồn để đảm nhiệm vị trí của anh Thái sau khi anh nghỉ hưu. Do thấy năng lực bạn ấy có nhiều điểm hơn mình, anh Thái đã chèn ép bạn, việc này dẫn đến giảm hiệu suất làm việc của phòng ban. Ban lãnh đạo quyết định cho anh Thái nghỉ hưu non. Vì bất bình, anh đã xoá sạch dữ liệu của phòng ban ngay sau khi nộp đơn xin nghỉ việc. Hành động của anh Thái đã vi phạm chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta tôn trọng tính cách cá nhân","Chúng ta cân bằng và công bằng trong mọi tình huống","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng"],"a":[2]},{"n":26,"q":"Hành động chủ động lắng nghe, nếu chữa rõ thì làm rõ, tìm hiểu, thấu hiểu, làm theo hoặc tổ chức cho đội ngũ làm theo, tham mưu cho lãnh đạo, phòng ban và đề xuất sáng kiến cải tiến công việc thể hiện giá trị cốt lõi nào của người VIMERS?","o":["Cân bằng","Trí tuệ","Tự chủ","Giá trị"],"a":[2]},{"n":27,"q":"Điền vào chỗ trống: \"VIMERS là một tổ chức, ……… giá trị cốt lõi kết nối cung cấp giải pháp toàn diện cho khách hàng vận tải hàng hóa Việt Nam!\"","o":["một cộng đồng những thành viên có cùng sứ mệnh, tầm nhìn","một cộng đồng những pháp nhân có cùng sứ mệnh, khác tầm nhìn","một hệ sinh thái những thành viên có cùng sứ mệnh, tầm nhìn","một hệ sinh thái những pháp nhân có cùng sứ mệnh, tầm nhìn"],"a":[0]},{"n":28,"q":"Quy tắc nào là trụ cột của sự khác biệt, quan trọng nhất trong giai đoạn VIMERS 2.0?","o":["Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam","Chúng ta uy tín thực hiện mọi cam kết","Chúng ta tiên phong bước vào kỷ nguyên mới"],"a":[4]},{"n":29,"q":"Phối hợp, nỗ lực hiệu quả, Khả năng tạo kết quả hiệu quả, Tự chịu trách nhiệm và Nhẫn nại đến cùng, đam mê quyết liệt là bốn bài học hành vi từ giá trị nào của VIMERS?","o":["Giá trị","Tin cậy","Tự chủ","Trí tuệ"],"a":[2]},{"n":30,"q":"Phối hợp, nỗ lực hiệu quả, Khả năng tạo kết quả hiệu quả, Tự chịu trách nhiệm và Nhẫn nại đến cùng, đam mê quyết liệt là bốn bài học hành vi từ giá trị nào của VIMERS?","o":["Giá trị","Tin cậy","Tự chủ","Trí tuệ"],"a":[2]},{"n":31,"q":"Mẫn là nhân viên kinh doanh online CN, chịu trách nhiệm bán các dòng xe tải hạng nhẹ của công ty. Trong Yagi, vì nghĩ không thể nào có khách, Mẫn đã thờ ơ với công việc, không cố gắng liên hệ khách hàng mới, I động thái thăm hỏi hay kinh doanh... Mẫn đã không thể hiện được giá trị cốt lõi nào của Người VIMERS?","o":["Tự chủ","Chia sẻ","Cân bằng","Tin cậy"],"a":[1]},{"n":32,"q":"\"Vui trong từng công việc\nLàm hết sức từ tâm\nChơi hết mình bạn nhé\nCuộc sống này thăng hoa\nKhông biết làm hết sức\nKhông biết chơi hết mình\nKhông động viên cuộc sống\nKhông có niềm vui chung\"\nlà bài học hành vi nào từ giá trị Cân bằng của VIMERS?","o":["Hành động tích cực - Cân bằng từ tâm","Đánh giá công bằng","Nỗ lực, không ngừng cố gắng","Tận hưởng cuộc sống - Cân bằng công việc và cuộc sống"],"a":[3]},{"n":33,"q":"CBNV VIMERS hoàn thành công việc đúng yêu cầu nhưng chưa thực sự nổi bật. Theo tinh thần Giá trị (Value) của VIMERS, điều nào phù hợp nhất?","o":["Tập trung vào việc hoàn thành công việc là đủ, vì chỉ càn hoàn thành KP) là được.","Luôn tìm cách tạo kết quả vượt mong đợi cho khách hàng và tổ chức","Nhờ người trợ giúp phần việc của mình, miễn sao tương ứng với việc mình giúp họ.","Nhờ người có kinh nghiệm về mảng minh yếu đào tạo lại mình, phản hồi và định hưởng công việc cho mình."],"a":[3]},{"n":34,"q":"Bạn là Kỹ thuật viên học việc. Trong 2 tháng đầu thử việc, bạn được học hỏi từ QLTT, các đồng nghiệp đi trước và từ hệ thống tài liệu đồ sộ của VIMERS. Bạn quyết tâm học hỏi và làm việc có trách nhiệm, cố gắng thực hiện công việc với hiệu quả cao nhất. Bạn đã thể hiện được nội dung nào sau đây trong giá trị cốt lõi của VIMERS?","o":["100-1=0","Khi đã có người rồi, hãy cho đi yêu thương, sự nghiệp tất sẽ đến.","Khi không có tiền, hãy cho đi sự chuyên căn, sự nghiệp, tiền tài tất sẽ đến.","Luôn cân bằng giá trị, tận hưởng từng phút giây trong công việc và cuộc sống."],"a":[2]},{"n":35,"q":"Nội dung trong chuẩn mực đạo đức \"Tiên phong bước vào kỷ nguyên mới\" gắn liền với các giá trị cốt lõi nào sau đây của VIMERS?","o":["Tiên phong","Trí tuệ","Dẫn đầu","Giá trị","Tự chủ"],"a":[1]},{"n":36,"q":"Phòng Giải pháp công nghệ đang phát triển phần mềm nội bộ CXM giúp tích hợp dữ liệu khách hàng, thuận tiện trong việc theo dõi khách hàng dành cho Phòng Kinh doanh, CSKH và Dịch vụ. Phòng Giải pháp công nghệ đang thực hiện quy tắc nào sau đây của VIMERS?","o":["Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam","Chúng ta tiên phong bước vào kỷ nguyên mới","Chúng ta cam kết kinh doanh bằng sự tử tế"],"a":[2]},{"n":37,"q":"Điền vào chỗ trống để thể hiện các tác hại của việc Không biết giải phóng chính mình theo sổ tay văn hoá VIMERS: \"Không biết giải phóng mình\nTư duy quá………\nKhông ......thực thi\nHành động thiếu tích cực\".","o":["1. ngắn hạn; 2. liên tục","1. trì trệ 2. từ tốn","1. phức tạp; 2. sáng suốt","1. phức tạp; 2. nhanh chóng"],"a":[2]},{"n":38,"q":"Trong một dự án nhóm, mỗi thành viên đều làm tốt phần của mình nhưng sản phẩm cuối cùng lại thiếu sự liên kết. Điều này đi ngược với nội dung nào trong Giá trị (Value)?","o":["Giá trị chỉ nằm ở vật chất","Giá trị là thành tích cá nhân","Giá trị tổng thể đến từ nhiều yếu tố liên kết chặt chẽ với nhau","Một người quản lý tốt tạo ra giá trị chung cho đội nhóm."],"a":[2]},{"n":39,"q":"\"Cân bằng được cuộc sống Với việc tại công ty Tận hưởng từng giây phút Hạnh phúc đến mỗi ngày Thiếu cân bằng cuộc sống Với việc tại công ty Không biết làm và hưởng Hạnh phúc đến rồi đi\"\nlà bài học hành vi nào từ giá trị Cân bằng của VIMERS?","o":["Biết giải phóng chính minh","Nỗ lực, không ngừng cố gắng","Luôn cân bằng giá trị","Tận hưởng từng phút giây cuộc sống"],"a":[2]},{"n":40,"q":"Huy là nhân viên thiết kế. Để đáp ứng được yêu cầu công việc với tốc độ cao nhất, Huy tự nghiên cứu hàng loạt công cụ AI, và đúc rút ra một số công cụ hữu dụng nhất để hỗ trợ đáng kể cho công việc của mình. Từ đó, tốc độ xử lý và hiệu quả công việc của Huy đã trở nên nhanh hơn rất nhiều. Huy sử dụng thời gian hành chính còn lại để tạo ra nhiều ẩn phẩm mới vượt ngoài KPI. Huy đã thể hiện giá trị cốt lõi nào của VIMERS?","o":["Tự chủ","Giá trị","Tri tuệ","Cân bằng"],"a":[2]},{"n":41,"q":"Hằng nhận thấy phòng ban minh hay phải làm báo cáo thủ công, tốn nhiều thời gian. Hằng quyết định đề xuất dùng Power Query để xây một báo cáo tự động cho phòng dùng. Sau khi được QLTT phê duyệt, Hằng đã tiến hành xây cho phòng. Hành động của Hằng đã thể hiện chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta cởi mở để không còn khoảng cách","Chúng ta tiên phong bước vào kỷ nguyên mới"],"a":[2]},{"n":42,"q":"Việc lấy khách hàng là trung tâm của mọi hành động, đón tiếp khách hàng nhiệt tinh là nội dung của bài học hành vi từ giá trị nào của VIMERS?","o":["Giá trị","Trí tuệ","Tự chủ","Tư duy"],"a":[0]},{"n":43,"q":"Yêu cầu về ngoại hình và trang phục đối với Nam khối văn phòng gồm: Tóc không được che lấp hết tai, không được phủ hết cổ áo; Trang phục gọn gàng, lịch sự, không mặc quần ngắn, quần rách; Mang giày tây hoặc giày có quai hậu; Không được mang dép lê đến công sở; Kiểm soát mùi cơ thể. Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":44,"q":"Câu thơ nào thể hiện tinh thần \"suy nghĩ và hành động khác biệt, tư duy mới, cách làm mới\" trong văn hoá VIMERS?","o":["Suy nghĩ và hành động\nTrái ngược ngày hôm qua\nLuôn nghĩ về hiệu quả\nẮt sẽ thành công cao","Suy nghĩ và hành động\nTốt hơn ngày hôm qua\nLuôn nghĩ về hậu quả\nẮt sẽ thành công cao","Suy nghĩ và hành động\nKhác biệt ngày hôm qua\nLuôn nghĩ về hậu quả\nẮt sẽ thành công cao","Suy nghĩ và hành động\nKhác biệt ngày hôm qua\nLuôn nghĩ về hiệu quả\nẮt sẽ thành công cao"],"a":[3]},{"n":45,"q":"Hàn là nhân viên điện nước. Hàn làm rất tốt công việc của mình, tuy nhiên tính cách có phần hướng nội và không giỏi giao tiếp. Vì lý do đó, QLTT của Hàn gần như không họp mặt cá nhân định kỳ với anh như với những nhân viên còn lại. Khi Hàn chào QLTT, QLTT thường chỉ gật đầu chữ không chào lại như bình thường. Hành động của QLTT của Hàn đi ngược lại chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta tôn trọng tính cách cá nhân","Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta cởi mở dẻ không còn khoảng cách","Chúng ta cân bằng và công bằng trong mọi tình huống"],"a":[0]},{"n":46,"q":"Bạn là nhân viên kho vận CN. Trong đợt bão Yagi, kho của bạn có hiện tượng dột nước ở khu chứa smartkey. Bạn nhanh chóng gói ghém đồ đạc để về nhà tránh bão. Tuần sau bão qua, bạn không báo lại với sếp về chuyện đó, không kiểm soát lại chất lượng hàng hoá. Bạn đã không thể hiện giá trị cốt lõi nào của Người VIMERS?","o":["Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta uy tín thực hiện mọi cam kết"],"a":[0]},{"n":47,"q":"Trong giao tiếp email, luôn ấn \"reply all\" (trả lời tất cả) để đảm bảo mọi người trong luồng email đều nằm được thông tin minh bạch, đầy đủ. Đúng hay Sai?","o":["Đúng","Sai"],"a":[1]},{"n":48,"q":"Chí là nhân viên điều phối vận tải tại VIMERS. Tuần này có 3 đơn hàng gấp cùng lúc, Chí phải làm thêm giờ liên tục 5 ngày. Đến ngày thứ 6, QLTT tiếp tục giao thêm công việc ngoài kế hoạch. Chí nên xử lý thế nào?","o":["Chí nên thẳng thần báo cáo tình hình hiện tại cho QLTT, và gợi ý QLTT giao cho một người khác có khả năng đảm nhiệm nhiệm vụ đó hơn.","Chí nên thắng thần báo cáo tình hình hiện tại cho QLTT, và lịch sự từ chối nhận thêm việc để đảm bảo việc thực hiện các công việc kia được chin chu nhất.","Chí nên thắng thần báo cáo tình hình hiện tại cho QLTT, đề xuất phần công lại hoặc hỗ trợ thêm nguồn lực, đồng thời sắp xếp ưu tiên để hoàn thành nhiệm vụ quan trọng nhất trước.","Chí nên nhanh chóng nhận công việc từ QLTT, đồng thời sắp xếp ưu tiên đế hoàn thành nhiệm vụ quan trọng nhất trước."],"a":[2]},{"n":49,"q":"Miêu thuộc dân tộc thiểu số, tốt nghiệp Đại học Ngoại Thương và mới đi làm tại VIMERS. Do hoàn cảnh gia đình khiến bạn đi làm từ nhỏ, Miêu rất nhanh nhạy trong công việc và tính toán rất nhanh. QLTT cũng nhận định bạn là một trong những nhân viên có khả năng làm việc xuất chúng, và thỉnh thoảng có giúp một số đồng nghiệp với công việc của họ. Tuy vậy, Miêu có một tật đó là hay lườm và bĩu môi khi thấy mọi người chậm hơn minh. Bạn từng nói với một nhân viên cấp dưới rằng, nếu đi làm mà phải hỏi lại ý sếp thì thà ở nhà đi còn hơn. Hành động của Miêu đi ngược lại chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta cởi mở để không còn khoảng cách","Chúng ta tôn trọng tính cách cá nhân","Chúng ta cân bằng và công bằng trong mọi tình huống"],"a":[1]},{"n":50,"q":"Anh Ân nhận thấy QLTT của mình thiên vị một đồng nghiệp khác và không công nhận công sức của mình. Anh quyết định tạm thời hoãn làm một số công việc không quan trọng mà anh biết chắc chắn sếp sẽ không công nhận. Đồng thời, anh tố cáo với ban lãnh đạo về hành động thiên vị của QLTT. Nếu QLTT thay đổi, anh sẽ nhiệt huyết làm việc trở lại. Hành động của anh Ân thể hiện chuẩn mực đạo đức \"Chúng ta cân bằng và công bằng trong mọi tình huống\" của Người VIMERS. Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":51,"q":"Quý là nhân viên kinh doanh. Cuối quý, Quý còn thiếu 15% chỉ tiêu. Một khách hàng đề nghị ký hợp đồng với điều kiện VIMERS cam kết giao hàng trong 24h - điều này vượt quá năng lực hiện tại của chi nhánh. Quý vẫn ký hợp đồng với khách hàng. Sau khi ký xong, Quý lấy lý do chi nhánh đang nhập xe về, báo khách hàng kiên nhẫn chờ thêm thời gian nữa đề chi nhánh sắp xếp. Quý đã không thể hiện giá trị cốt lõi nào của Người VIMERS?","o":["Tự chủ","Tín nhiệm","Tin cậy","Giá trị"],"a":[2]},{"n":52,"q":"Nói và làm nhất quán, tránh nói 10 chỉ làm 9 là bài học hành vi từ giá trị nào của VIMERS?","o":["Trung thực","Tin cậy","Tự chủ","Cân bằng"],"a":[3]},{"n":53,"q":"Việc Người VIMERS tiên phong hội nhập, thực hành áp dụng công nghệ số vào công việc để không tụt hậu trong kỷ nguyên mới là nội dung bài học hành vi từ giá trị Trí tuệ. Đúng hay Sai?","o":["Đúng","Sai"],"a":[]},{"n":54,"q":"Bạn là một tổ trưởng kỹ thuật, bạn biết tiếng Trung và đã có bằng HSK6, vì vậy được QLTT rất tin tưởng giao các nhiệm vụ dịch thuật, soạn tài liệu đào tạo và trao đổi với đối tác. Trong tổ của bạn có một bạn kỹ thuật học việc mới vào, bạn đó bày tỏ mong muốn xin bạn thông tin về khoá học tiếng Trung. Bạn không muốn cho bạn đó thông tin, vì trong tổ đã có bạn biết tiếng Trung rồi, và bạn đó là cấp dưới nên công việc vẫn chưa cần nhiều tiếng Trung lắm. Bạn đã không thể hiện giá trị cốt lõi nào của Người VIMERS?","o":["Sự tử tế","Giá trị","Chia sẻ","Cân bằng","Trí tuệ"],"a":[2]},{"n":55,"q":"Sáu là chuyên viên BA. Trong giai đoạn xây dựng website nội bộ cho công ty, nhận thấy các thành viên khác tốn rất nhiều thời gian làm báo cáo thủ công, Sáu đã chủ động đề xuất một mẫu file báo cáo tự động lên QLTT; sau khi được phê duyệt, Sáu hướng dẫn mọi người thực hiện để tiết kiệm thời gian hơn. Sáu đã thể hiện được giá trị cốt lõi nào của Người VIMERS?","o":["Cân bằng","Tư chủ","Tin cậy","Giá trị"],"a":[1]},{"n":56,"q":"Ngày thành lập của VIMID là?","o":["03/05/2010","05/03/2010","10/03/2005","10/03/2010"],"a":[1]},{"n":57,"q":"Thuỳ là nhân viên kinh doanh dịch vụ. Có vài nhân viên mới chưa có tài khoản ngân hàng MBBank, chưa được phân quyền vào Box, không biết sử dụng Teams để tham gia đào tạo. Khi được nhờ hướng dẫn, Thuỳ không nhiệt tình giúp đỡ hay đưa ra cho họ hướng dẫn cụ thể. Thuỷ đã không thể hiện được chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả","Chúng ta uy tín thực hiện mọi cam kết","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoa Việt Nam","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta cởi mở để không còn khoảng cách"],"a":[4]},{"n":58,"q":"Câu thơ nào thể hiện tinh thần \"chủ động, lắng nghe, làm rõ, thấu hiểu, tuân thủ, làm theo\" theo văn hoá VIMERS?","o":["Chủ động trong công việc\nSắp xếp thật phi thường\nViệc gì cũng nhẹ nhàng\nNhận nhiều điều tốt đẹp","Chủ động trong công việc\nSắp xếp thật cầu toàn\nViệc gì cũng tàng tàng\nNhận nhiều điều thú vị","Chủ động trong công việc\nSắp xếp thật chu toàn\nViệc gì cũng nhẹ nhàng\nNhận nhiều điều thú vị"],"a":[2]},{"n":59,"q":"Nội dung \"Người VIMERS không hoài niệm và lệ thuộc vào giá trị đóng góp trong quá khứ mà luôn nỗ lực làm mới, và phải luôn mang đến giá trị cao nhất, vượt sức mong đợi cho bản thân, gia đình và tổ chức\" thể hiện giá trị cốt lõi nào của Người VIMERS?","o":["Cân bằng","Tin cậy","Giá trị","Chia sẻ"],"a":[2]},{"n":60,"q":"Đâu không phải cam kết của VIMERS trong giai đoạn 1.0 (2010 - 2020)?","o":["Gia tăng các giá trị, kết nối khách hàng, đối tác, từng bước hình thành cộng đồng vận tải hàng hóa VIMERS","Giá thành phải chăng, phù hợp với tình hình tài chính mọi khách hàng","Sản phẩm phù hợp với điều kiện sử dụng của khách hàng!","Sản phẩm được bảo hành, sửa chữa nhanh chóng, kịp thời, chính xác và thuận tiện!"],"a":[1]},{"n":61,"q":"\"Hãy nỗ lực không ngừng\nLàm đến cùng bên chí\nLuôn hết sức kiên trì\nThành công đến gần hơn\"\nlà bài học hành vi từ giá trị Cân bằng. Đúng hay Sai?","o":["Đúng","Sai"],"a":[1]},{"n":62,"q":"\"Mỗi Người VIMERS có trách nhiệm tự tạo cho chúng ta môi trường làm việc dễ dàng hơn và chuyên nghiệp hơn bằng ứng dụng các giải pháp chuyển đổi số vào từng hành động\" là nội dung của chuẩn mực đạo đức nào của VIMERS?","o":["Chúng ta tiên phong bước vào kỷ nguyên mới","Chúng ta cân bằng và công bằng trong mọi tình huống","Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoa Việt Nam"],"a":[0]},{"n":63,"q":"Thành là kỹ thuật viên gò CN. Thành được QLTT giao nhiệm vụ biên soạn nội dung đào tạo nghề cho mọi người trong tổ. Tuy nhiên, Thành nghĩ vì KPI này chiếm có 5% thôi, mà lại là nhiệm vụ khó đối với Thành nên Thành sinh lười biếng, trễ nải, bỏ bê nhiệm vụ. QLTT bảo gì thì Thành làm nấy mà không quan tâm đến kết quả. Thành đã không thể hiện được giá trị cốt lõi nào của Người VIMERS?","o":["Tin cậy","Cân bằng","Tự chủ","Giá trị"],"a":[3]},{"n":64,"q":"\"Người VIMERS hiểu rằng sản phẩm, dịch vụ tốt, chất lượng là chưa đủ, sản phẩm tốt còn phải phù hợp với nhu cầu vận tải của khách hàng và phải chú trọng đào tạo, hướng dẫn khách hàng sử dụng, vận hành, chủ động chăm sóc, bảo dưỡng định kỳ\" là nội dung của chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta uy tín thực hiện mọi cam kết","Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả","Chúng ta cân bằng và công bằng trong mọi tình huống"],"a":[2]},{"n":65,"q":"Điền vào chỗ trống để thể hiện nội dung của chuẩn mực đạo đức \"Chúng ta tôn trọng tính cách cá nhân\" của VIMERS: \"Người VIMERS tiếp nhận tinh hoa thế giới, .........","o":["chấp nhận sự khác biệt, thay đổi để phát triển. Mỗi ý tưởng đều được ghi nhận, mỗi sáng kiến đều được tôn vinh","chấp nhận sự khác biệt để trưởng thành, thay đổi để phát triển. Mỗi ý tưởng đều được ghi nhận, mỗi sáng kiến đều được tônvinh","chấp nhận sự khác biệt để trưởng thành, thay đổi để phát triển. Mỗi ý tưởng sáng tạo đều được ghi nhận, mỗi sáng kiến giả trị đều được tôn vinh"],"a":[2]},{"n":66,"q":"\"Tự đúc rút kinh nghiệm, biến thành tri thức, trí tuệ cho bản thân và người khác\" là bài học hành vi từ giá trị Trí tuệ. Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":67,"q":"Điền vào chỗ trống để thể hiện nội dung của giá trị Chia sẻ trong sổ tay văn hoá VIMERS: \"VIMERS không chờ đợi mình có gì mới thực hành cho đi, mà luôn ......","o":["sẵn sàng cho đi mọi điều tốt đẹp mình đang có cho người khác. Không cho đi, thì sẽ chẳng có được. Người cho đi mà cầu nhận lại là người tỉnh toán thiệt hơn. Người cho đi mà không cầu nhận lại đó là người biết nghĩ cho người khác.","sẵn sàng cho đi mọi điều tốt đẹp mình đang có cho người khác. Không cho đi, thì sẽ không bao giờ có được. Người cho đi mà không cầu nhận lại đó là người biết nghĩ cho người khác.","sẵn sàng cho đi mọi lúc mọi nơi, mọi điều tốt đẹp mình đang có cho người khác. Không cho đi, thì sẽ không bao giờ có được. Người cho đi mà không cầu nhận lại đó là người biết nghĩ cho người khác.","sẵn sàng cho đi mọi lúc mọi nơi, mọi điều tốt đẹp mình đang có. Không cho đi, thì sẽ chẳng có được. Người cho đi mà không cầu nhận lại đó là người giàu có nhất thế gian.","Sẵn sàng cho đi mọi lúc mọi nơi, mọi điều tốt đẹp mình đang có. Không cho đi, thì sẽ không bao giờ có được. Người cho đi mà không cầu nhận lại đó là người giàu có nhất thế gian."],"a":[3]},{"n":68,"q":"Sổ tay VIMERS nói rằng thực tế chúng ta tiếp xúc với đồng nghiệp nhiều hơn người thân trong gia đình, vì vậy việc xây dựng mối quan hệ tốt đẹp với đồng nghiệp quan trọng ngang bằng xây dựng mối quan hệ trong gia đình. Đúng hay Sai?","o":["Đúng","Sai"],"a":[1]},{"n":69,"q":"\"Nhân quả là triết lý của cuộc sống\" là nội dung chính xác của quy tắc \"Chúng ta ý thức chăm sóc cộng đồng và môi trường\". Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":70,"q":"Trong nhiều giai đoạn thị trường xe tải đi xuống (đặc biệt 2022 - 2023), VIMID vẫn mở rộng trạm 3S, duy trì hậu mãi, đảm bảo dịch vụ phụ tùng, bảo hành cho các khách hàng trên toàn quốc. Điều này thể hiện chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta uy tín thực hiện mọi cam kết","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam"],"a":[2]},{"n":71,"q":"Nếu bạn là nhân viên cấp dưới, khi gặp lãnh đạo hoặc cấp trên, bạn chỉ được chào khi lãnh đạo chủ động nhìn bạn và có tư thế cởi mở sẵn sàng chào bạn. Đúng hay Sai?","o":["Đúng","Sai"],"a":[1]},{"n":72,"q":"Đâu là nội dung của bài học hành vi \"Chủ động, lắng nghe, làm rõ, thấu hiểu, tuân thủ, làm theo\" phóng chiếu theo giá trị Tự chủ của VIMERS?","o":["Chúng ta cần chủ động trong công việc, sắp xếp công việc chu toàn hợp lý; lắng nghe chủ động để hiểu rõ, chưa rõ cần hỏi ngay, tìm hiểu và thấu hiểu nhiệm vụ, bối cảnh của công việc, đồng thời tuân thủ chặt chẽ quy trình làm việc","Chúng ta cần chủ động trong công việc, sắp xếp công việc chu toàn hợp lý; lắng nghe chủ động để hiểu rõ, chưa rõ nhiệm vụ cần tự tìm hiểu trước chứ không được hỏi ngay; thấu hiểu nhiệm vụ, bối cảnh của công việc, đồng thời tuân thủ chặt chẽ quy trình làm việc","Chúng ta cần chủ động trong công việc, sắp xếp công việc chu toàn hợp lý; lắng nghe chủ động để hiếu rõ, chưa rõ cần hỏi ngay, tìm hiểu và thấu hiểu nhiệm vụ, bối cảnh của công việc, đồng thời tuân thủ và tự cải tiến quy trình làm việc"],"a":[2]},{"n":73,"q":"Phối hợp, nỗ lực hiệu quả, Khả năng tạo kết quả hiệu quả, Tự chịu trách nhiệm và Nhẫn nại đến cùng, đam mê quyết liệt là bốn bài học hành vi từ giá trị nào của VIMERS?","o":["Giá trị","Tin cậy","Tự chủ","Trí tuệ"],"a":[2]},{"n":74,"q":"Điền vào chỗ trống để thể hiện nội dung của giá trị Cân bằng: \"Luôn cân bằng giá trị,….”","o":["đảm bảo quyền lợi cho tổ chức, khách hàng và bản thân, đồng thời tận hưởng từng phút giây trong công việc và cuộc sống.","biết hưởng thụ, tận hưởng từng phút giây trong công việc và cuộc sống.","biết nghỉ ngơi, tận hưởng từng phút giây trong công việc và cuộc sống.","tận hưởng từng phút giây trong công việc và cuộc sống."],"a":[3]},{"n":75,"q":"Theo bài học hành vi từ giá trị Tự chủ, nếu một người không đam mê, yêu nghề thì không thể nào tin cậy. Đúng hay Sai?","o":["Đúng","Sai"],"a":[1]},{"n":76,"q":"Theo giá trị Chia sẻ trong sổ tay văn hoá VIMERS, việc chúng ta luôn sẵn sàng cho đi có nghĩa là chúng ta đã hiểu ý nghĩa sống trên đời, điều nào là thiết yếu. Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":77,"q":"Khi khách báo chân côn bị hồi chậm bất thường, Tường làm việc rất chỉn chu tỉ mỉ, từ khâu tiếp nhận thông tin chi tiết, chạy thử tái hiện lỗi, kiểm tra kỹ hệ thống chân côn, đến kiểm tra thêm bộ ly hợp cho chắc chắn. Kết quả là Tường tìm ra hệ thống chân côn của khách hỏng tận 2 lỗi khác nhau và sửa chữa, vệ sinh như mới, khiến khách hàng vô cùng hài lòng. Hành động của Tường đã thể hiện chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam","Chúng ta cam kết kinh doanh bằng sự tử tế","Chúng ta có thiện ý hợp tác bền vững với đối tác khách hàng","Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả"],"a":[3]},{"n":78,"q":"Một bạn nhân viên mới vào hay giúp đỡ các anh chị trong phòng lấy cơm trưa hàng ngày. Một ngày, chị Hà nhờ bạn chạy xuống lấy giúp chị 5 suất cơm. Hôm đó bạn đau chân nên đã nhẹ nhàng từ chối. Thấy vậy, chị Hà ngay lập tức lườm bạn, dù bạn có giải thích như nào chị cũng coi như không nghe thấy và không trả lời. Hành động của chị Hà đã không thể hiện chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cởi mở để không còn khoảng cách","Chúng ta tôn trọng tính cách cá nhân","Chúng ta công bằng và cân bằng trong mọi tình huống","Chúng ta ý thức chăm sóc cộng đồng và môi trường"],"a":[0]},{"n":79,"q":"Bài học hành vi \"Sống xứng đáng với hiện tại\" phóng chiếu từ giá trị Cân bằng trong sổ tay văn hoá VIMERS nên được hiểu như thế nào?","o":["Là tận hưởng mọi khoảnh khắc, sống hết mình không lo nghĩ với hiện tại.","Là tận hưởng mọi khoảnh khắc, sống hết mình, tập trung, toàn ý với hiện tại và tương lai.","Là tận hưởng mọi khoảnh khắc, sống hết mình, tập trung, toàn ý với hiện tại.","Là tận hưởng mọi khoảnh khắc, sống hết mình, luôn khao khát niềm vui cao hơn ở hiện tại."],"a":[2]},{"n":80,"q":"Khi dùng danh thiếp, chúng ta phải dùng danh thiếp mới; trao đổi danh thiếp với người có chức vụ cao nhất trước; trao bằng hai tay, phần đọc xuôi về phía khách hàng; trước khi gặp khách hàng, để sẵn danh thiếp trong túi áo/quần để tiện trao đổi; đọc tên người trao ngay khi nhận danh thiếp của người trao; sử dụng danh thiếp tiếng Việt khi giao tiếp với chính quyền. Đúng hay Sai?","o":["Đúng","Sai"],"a":[1]},{"n":81,"q":"Khi báo giá gói bảo hiểm tai nạn dân sự cho xe, một nhân viên đã cố tình lược bớt yêu cầu về thuế VAT để lôi kéo khách. Hành động của nhân viên này đã vi phạm chuẩn mực đạo đức \"Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng\". Đúng hay Sai?","o":["Đúng","Sai"],"a":[0]},{"n":82,"q":"Một quản lý đánh giá nhân viên dựa trên cảm tính thay vì kết quả đóng góp thực tế. Theo văn hóa VIMERS, điều gì nên được ưu tiên?","o":["Quan hệ cá nhân","Thâm niên làm việc","Đánh giá minh bạch dựa trên giá trị đóng góp","Ý kiến của quản lý"],"a":[2]},{"n":83,"q":"Nếu bạn là nhân viên cấp dưới, khi gặp lãnh đạo hoặc cấp trên, bạn chỉ được chào khi lãnh đạo chủ động nhìn bạn và có tư thế cởi mở sẵn sàng chào bạn. Đúng hay Sai?","o":["Đúng","Sai"],"a":[1]},{"n":84,"q":"Hành động chủ động lắng nghe, nếu chữa rõ thì làm rõ, tìm hiểu thấu hiểu, làm theo hoặc tổ chức cho đội ngũ làm theo, tham mưu cho lãnh đạo, phòng ban và đề xuất sáng kiến cải tiến công việc thể hiện giá trị cốt lõi nào của người VIMERS?","o":["Cân bằng","Trí tuệ","Tự chủ","Giá trị"],"a":[2]},{"n":85,"q":"“Trung thực với chính mình\" là bài học hành vi từ giá trị nào của VIMERS?","o":["Tin cậy","Tự chủ","Giá trị","Cân bằng"],"a":[0]},{"n":86,"q":"Khi có tình thế cấp thiết xảy ra yêu cầu phản ứng ngay, chúng ta cần thông báo cho ai đầu tiên?","o":["Thông báo cho Quản lý trực tiếp của mình","Thông báo cho Quản lý trực tiếp của người làm xảy ra tình thế cấp thiết","Thông báo cho người có khả năng giải quyết vấn đề","Thông báo cho bộ phận Nhân sự, nhờ hỗ trợ giải quyết"],"a":[0]},{"n":87,"q":"Khi ngồi trên ô tô, một nhân viên đi cùng lãnh đạo và người có chức vụ cao thứ hai. Nhân viên sẽ ngồi ở vị trí nào?","o":["Ghế sau bên trái lãnh đạo","Ghế sau bên phải lãnh đạo","Ghế trên","Ghế sau bên phải lãnh đạo và người có chức vụ cao thứ hai"],"a":[2]},{"n":88,"q":"Lan - Nhân viên Đào tạo - được giao hỗ trợ xây dựng tài liệu đào tạo chuyên môn cùng phòng Mua hàng. Lan tích cực tìm hiểu sâu về quy trình làm việc phòng Mua hàng, từ đó có những đề xuất đóng góp ý kiến có giá trị để xây dựng tài liệu mang giá trị thực tiễn cao, phù hợp với quy trình vận hành của VIMERS. Lan đã thể hiện giá trị cốt lõi nào của VIMERS?","o":["Cân bằng","Chia sẻ","Giá trị","Trí tuệ"],"a":[2,3]},{"n":89,"q":"Mục tiêu chính của Sổ tay Văn hoá VIMERS là gì?","o":["Quảng bá hình ảnh công ty ra thị trường Việt Nam và quốc tế; tạo niềm tự hào cho nhân viên VIMERS khi gặp mặt đối tác, khách hàng; đồng thời giới thiệu về các chính sách, chế độ đãi ngộ nội bộ cho cán bộ nhân viên VIMERS.","Đào tạo kỹ năng chuyên môn cho nhân viên mới, đảm bảo nhân viên mới có đủ bộ kỹ năng cần thiết để thực hiện công việc tại VIMERS một cách hiệu quả nhất.","Đúc kết những giá trị cao đẹp của Người VIMERS, gắn kết các thành viên đang làm việc tại VIMERS thành một khối đoàn kết, hiệp lực trong nội bộ và kết nối cùng đối tác, khách hàng, thực hiện đúng văn hoá Tập đoàn, đúng tinh thần của Người VIMERS.","Xây dựng chiến lược kinh doanh dài hạn cho công ty, phân bổ nguồn lực con người hợp lý theo khối, phòng ban chức năng nhằm thực hiện được chiến lược đó."],"a":[2]},{"n":90,"q":"Chọn đáp án sai (có thể chọn nhiều đáp án). Khi bắt tay trong kinh doanh chúng ta cần:","o":["Dùng một tay phải để bắt tay, mắt nhìn thẳng vào mắt người đối diện","Khi bắt tay, hơi cúi người thể hiện sự tôn trọng","Khi bắt tay, cần nắm chặt bàn tay người đối diện để thể hiện sự nồng ấm","Khi gặp người lớn tuổi cần có thái độ kính trọng, bắt hai tay hoặc dùng tay phải đỡ tay trái, tay trái bắt tay","Bắt tay lần lượt theo thứ tự người có chức vụ cao hơn; người lớn tuổi hơn"],"a":[1,2]},{"n":91,"q":"Chị Thưởng là giám sát chi nhánh tại VIMERS. Chị đã làm việc ở công ty từ những ngày đầu, tính đến năm 2026 đã là 15 năm. Trong các buổi họp phòng hàng tháng, chị đều chia sẻ về các khó khăn, cơ hội, bài học, kỹ năng trong nghề cho nhân viên cấp dưới. Chị cũng theo sát, đồng hành cùng từng người trong team để đảm bảo họ học hỏi và trưởng thành được nhiều nhất. Chị Thưởng đã thể hiện nội dung gì trong giá trị cốt lõi của VIMERS?","o":["Khi không có tiền, hãy cho đi sự chuyên cần, sự nghiệp, tiền tài tất sẽ đến.","Sau khi sự nghiệp thành công rồi, hãy cho đi thật nhiều trí huệ, tất niềm vui sẽ đến.","Khi có tiền tài (cơ hội), hãy cho đi tiền tài, như vậy người sẽ đến.","Khi đã có người rồi, hãy cho đi yêu thương, sự nghiệp tất sẽ đến."],"a":[1]},{"n":92,"q":"Đâu là nội dung của bài học hành vi \"Hành động tích cực, Cân bằng từ tâm\" phóng chiếu theo giá trị Cân bằng?","o":["Cân bằng giá trị thật\nGiữa khách hàng - công ty\nMuôn đời luôn ghi nhớ\nKinh doanh sẽ trường tồn","Cân bằng trong tâm thức\nTrí sáng hơn trăng rằm\nGiải quyết việc càng khó\nTốc độ càng tăng mau\nCân bằng giá trị lớn\nGiữa khách hàng - công ty\nMuôn đời luôn ghi nhớ\nKinh doanh sẽ trường tôn","Cân bằng trong tâm thức\nTrí tuệ đạt tường minh\nGiải quyết việc càng khó Hiệu suất càng bình ổn"],"a":[1]},{"n":93,"q":"Trong nhóm điều phối, hai nhân viên liên tục cạnh tranh gay gắt, gây mâu thuẫn ảnh hưởng đến tiến độ giao hàng. Là trưởng nhóm, bạn xử lý tình huống này như thế nào?","o":["Bạn tạo cuộc gặp thẳng thắn, phân tích điểm mạnh, điểm yếu của cả hai người để mọi người tự nhận thức bản thân và thấu hiểu đối phương hơn.","Bạn tạo cuộc gặp thẳng thắn, chỉ ra rằng mục tiêu chung là phục vụ khách hàng tốt nhất - không phải hơn thua nhau. Chuyển hướng năng lượng cạnh tranh tiêu cực với đồng đội sang cạnh tranh với thành tích của chính mình, tập trung đóng góp cho tổ chức. Đồng thời, bạn cũng góp ý cá nhân đối với từng người về điểm mạnh, điểm yếu của chính họ, và thể hiện bạn trân trọng nỗ lực của họ.","Bạn góp ý công khai để cả phòng cùng nắm được tinh thần, chỉ ra rằng mục tiêu chung là phục vụ khách hàng tốt nhất - không phải hơn thua nhau. Chuyển hướng năng lượng cạnh tranh tiêu cực với đồng đội sang cạnh tranh với thành tích của chính minh, tập trung đóng góp cho tổ chức.","Bạn tạo cuộc gặp thẳng thắn, chỉ ra rằng mục tiêu chung là phục vụ khách hàng tốt nhất - không phải hơn thua nhau. Chuyển hướng năng lượng cạnh tranh tiêu cực với đồng đội sang cạnh tranh với thành tích của chính mình, tập trung đóng góp cho tổ chức. Sau đó, bạn đề xuất biện pháp phạt cho lần tới xảy ra mâu thuẫn, nhằm giải quyết tình trạng triệt để."],"a":[1]},{"n":94,"q":"Trong nhiều giai đoạn thị trường xe tải đi xuống (đặc biệt 2022 - 2023), VIMID vẫn mở rộng trạm 3S, duy trì hậu mãi, đảm bảo dịch vụ phụ tùng, bảo hành cho các khách hàng trên toàn quốc. Điều này thể hiện chuẩn mực đạo đức nào của Người VIMERS?","o":["Chúng ta cam kết sản xuất kinh doanh sản phẩm chất lượng, an toàn, hiệu quả","Chúng ta có thiện ý hợp tác bền vững với đối tác, khách hàng","Chúng ta uy tín thực hiện mọi cam kết","Chúng ta hợp tác nâng tầm giá trị ngành vận tải hàng hoá Việt Nam"],"a":[2]},{"n":95,"q":"Thông điệp “100 - 1 = 0” trong bộ Giá trị cốt lõi của VIMERS muốn truyền tải điều gì?","o":["Chỉ cần có một cá nhân xuất sắc là tập thể sẽ thành công","Một mắt xích thiếu trách nhiệm có thể ảnh hưởng đến cả tập thể","Thành công nhu thuộc hoàn toàn vào năng lực của người lãnh đạo"],"a":[1]},{"n":96,"q":"Trong một dự án nhóm, mỗi thành viên đều làm tốt phần của mình nhưng sản phẩm cuối cùng lại thiếu sự liên kết. Điều này đi ngược với nội dung nào trong Giá trị (Value)?","o":["Giá trị chỉ nằm ở vật chất","Giá trị là thành tích cá nhân","Giá trị tổng thể đến từ nhiều yếu tố liên kết chặt chẽ với nhau","Một người quản lý tốt tạo ra giá trị chung cho đội nhóm."],"a":[2]}];
+const L = 'ABCDE';
+const KEY = 'vh2026_study_v1';
+const $ = id => document.getElementById(id);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const sameSet = (a, b) => a.length === b.length && a.every(x => b.includes(x));
+const hasKey = q => q.a.length > 0;
+const multi = q => q.a.length > 1;
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } },
+  set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} }
+};
+
+// S = current session
+// items: [{q, order:[orig option idx...], pick:[], done:bool}]
+let S = null, timerId = null;
+
+function makeItems(list, shuffleOpts) {
+  return list.map(q => ({ q, order: shuffleOpts ? shuffle(q.o.map((_, i) => i)) : q.o.map((_, i) => i), pick: [], done: false }));
+}
+function show(id) {
+  for (const s of ['home', 'quiz', 'result']) $(s).classList.toggle('hidden', s !== id);
+  $('homeBtn').classList.toggle('hidden', id === 'home');
+}
+
+/* ---------- STUDY ---------- */
+function studyInfo() {
+  const st = store.get(); const res = st.res || {};
+  const ok = Object.values(res).filter(v => v === 1).length, bad = Object.values(res).filter(v => v === 0).length;
+  $('studyInfo').textContent = `Đã làm ${ok + bad}/${DATA.length} câu · Đúng ${ok} · Sai ${bad}`;
+  $('studyWrong').disabled = bad === 0;
+}
+function startStudy(kind) {
+  const st = store.get();
+  if (kind === 'reset') { store.set({}); }
+  const res = kind === 'reset' ? {} : (st.res || {});
+  let list = DATA;
+  if (kind === 'wrong') list = DATA.filter(q => res[q.n] === 0);
+  if ($('studyOrder').value === 'rand') list = shuffle(list);
+  S = { mode: 'study', items: makeItems(list, $('studyShuffle').checked), i: 0 };
+  // resume position
+  if (kind === 'continue') {
+    S.items.forEach(it => { if (res[it.q.n] !== undefined && st.pick && st.pick[it.q.n]) { it.pick = st.pick[it.q.n]; it.done = true; } });
+    const first = S.items.findIndex(it => !it.done);
+    S.i = first < 0 ? 0 : first;
+  }
+  startQuiz();
+}
+function saveStudy(it) {
+  const st = store.get(); st.res = st.res || {}; st.pick = st.pick || {};
+  if (hasKey(it.q)) st.res[it.q.n] = sameSet(it.pick, it.q.a) ? 1 : 0;
+  st.pick[it.q.n] = it.pick; store.set(st);
+}
+
+/* ---------- EXAM ---------- */
+function startExam() {
+  const pool = DATA.filter(hasKey);
+  const n = +$('examCount').value;
+  let list = $('examShuffleQ').checked ? shuffle(pool) : pool;
+  if (n < list.length) list = $('examShuffleQ').checked ? list.slice(0, n) : shuffle(pool).slice(0, n).sort((a, b) => a.n - b.n);
+  const mins = Math.max(1, +$('examTime').value || 35);
+  S = { mode: 'exam', items: makeItems(list, $('examShuffleO').checked), i: 0, end: Date.now() + mins * 60000, submitted: false };
+  startQuiz();
+  tick(); timerId = setInterval(tick, 1000);
+}
+function tick() {
+  const left = Math.max(0, S.end - Date.now()), s = Math.round(left / 1000);
+  $('timer').textContent = '⏱ ' + String(s / 60 | 0).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+  $('timer').classList.toggle('low', s <= 60);
+  if (left <= 0) { submitExam(true); }
+}
+function submitExam(auto) {
+  if (S.submitted) return;
+  const blank = S.items.filter(it => !it.pick.length).length;
+  if (!auto && !confirm(blank ? `Bạn còn ${blank} câu chưa làm. Nộp bài?` : 'Nộp bài?')) return;
+  clearInterval(timerId); S.submitted = true;
+  S.items.forEach(it => it.done = true);
+  const ok = S.items.filter(it => sameSet(it.pick, it.q.a)).length, tot = S.items.length;
+  $('scoreBig').textContent = `${ok}/${tot}`;
+  $('scoreBig').style.color = ok / tot >= 0.8 ? 'var(--ok)' : ok / tot >= 0.5 ? 'var(--warn)' : 'var(--bad)';
+  $('scoreSub').textContent = `${auto ? 'Hết giờ! ' : ''}Điểm: ${(ok / tot * 10).toFixed(2)}/10 · Sai ${tot - ok - blank} · Bỏ trống ${blank}`;
+  show('result');
+}
+
+/* ---------- QUIZ VIEW ---------- */
+function startQuiz() {
+  const exam = S.mode === 'exam';
+  $('modeTag').textContent = exam ? 'THI' : 'HỌC TẬP';
+  $('timer').classList.toggle('hidden', !exam || S.submitted);
+  $('submit').classList.toggle('hidden', !exam || S.submitted);
+  $('total').textContent = S.items.length;
+  show('quiz'); render();
+}
+function render() {
+  const it = S.items[S.i], q = it.q, exam = S.mode === 'exam';
+  const reveal = it.done && (!exam || S.submitted);
+  $('pos').textContent = S.i + 1;
+  $('orig').textContent = `(câu ${q.n} trong đề)`;
+  $('qtext').textContent = q.q + (multi(q) ? '\n(Chọn nhiều đáp án)' : '');
+  const box = $('opts'); box.innerHTML = '';
+  it.order.forEach((oi, pos) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.innerHTML = `<span class="k">${L[pos]}</span><span></span>`;
+    b.lastChild.textContent = q.o[oi];
+    const picked = it.pick.includes(oi), right = q.a.includes(oi);
+    if (reveal && hasKey(q)) {
+      if (right && picked) b.classList.add('ok');
+      else if (right) b.classList.add('ok', multi(q) ? 'miss' : 'x');
+      else if (picked) b.classList.add('bad');
+    } else if (picked) b.classList.add('sel');
+    b.disabled = reveal || (exam && S.submitted);
+    b.onclick = () => choose(oi);
+    box.appendChild(b);
+  });
+  // message
+  let m = '';
+  if (!hasKey(q)) m = `<div class="msg warn">⚠ Câu này trong file chưa đánh dấu đáp án đúng.</div>`;
+  else if (reveal) {
+    const right = q.a.map(oi => L[it.order.indexOf(oi)]).sort().join(', ');
+    if (!it.pick.length) m = `<div class="msg bad">Chưa trả lời. Đáp án đúng: ${right}</div>`;
+    else if (sameSet(it.pick, q.a)) m = `<div class="msg ok">✔ Chính xác!</div>`;
+    else m = `<div class="msg bad">✘ Sai rồi! Đáp án đúng là: ${right}</div>`;
+  }
+  $('msg').innerHTML = m;
+  $('check').classList.toggle('hidden', !(S.mode === 'study' && multi(q) && !it.done));
+  $('check').disabled = !it.pick.length;
+  $('prev').disabled = S.i === 0;
+  $('next').disabled = S.i === S.items.length - 1;
+  renderSide();
+}
+function renderSide() {
+  const exam = S.mode === 'exam', g = $('grid'); g.innerHTML = '';
+  let ok = 0, bad = 0, done = 0;
+  S.items.forEach((it, idx) => {
+    const c = document.createElement('button');
+    c.className = 'cell'; c.textContent = idx + 1;
+    const correct = sameSet(it.pick, it.q.a);
+    if (exam && !S.submitted) { if (it.pick.length) { c.classList.add('done'); done++; } }
+    else if (it.done && hasKey(it.q)) { c.classList.add(correct ? 'ok' : 'bad'); correct ? ok++ : bad++; }
+    if (idx === S.i) c.classList.add('cur');
+    c.onclick = () => { S.i = idx; render(); };
+    g.appendChild(c);
+  });
+  $('stats').innerHTML = exam && !S.submitted
+    ? `<span>Đã làm <b>${done}</b>/${S.items.length}</span>`
+    : `<span>Đúng <b style="color:var(--ok)">${ok}</b></span><span>Sai <b style="color:var(--bad)">${bad}</b></span><span>Còn <b>${S.items.length - ok - bad}</b></span>`;
+}
+function choose(oi) {
+  const it = S.items[S.i], q = it.q;
+  if (it.done && (S.mode === 'study' || S.submitted)) return;
+  if (multi(q)) it.pick = it.pick.includes(oi) ? it.pick.filter(x => x !== oi) : [...it.pick, oi];
+  else it.pick = [oi];
+  if (S.mode === 'study' && !multi(q)) { it.done = true; saveStudy(it); }
+  render();
+}
+function check() {
+  const it = S.items[S.i];
+  if (S.mode !== 'study' || it.done || !it.pick.length) return;
+  it.done = true; saveStudy(it); render();
+}
+function go(d) { const j = S.i + d; if (j >= 0 && j < S.items.length) { S.i = j; render(); } }
+
+/* ---------- WIRING ---------- */
+$('studyStart').onclick = () => startStudy('continue');
+$('studyWrong').onclick = () => startStudy('wrong');
+$('studyReset').onclick = () => { if (confirm('Xóa tiến độ và học lại từ đầu?')) startStudy('reset'); };
+$('examStart').onclick = startExam;
+$('submit').onclick = () => submitExam(false);
+$('check').onclick = check;
+$('prev').onclick = () => go(-1);
+$('next').onclick = () => go(1);
+$('review').onclick = () => { S.i = 0; startQuiz(); };
+$('retry').onclick = () => { show('home'); };
+$('homeBtn').onclick = () => {
+  if (S && S.mode === 'exam' && !S.submitted && !confirm('Thoát sẽ hủy bài thi đang làm. Tiếp tục?')) return;
+  clearInterval(timerId); S = null; studyInfo(); show('home');
+};
+document.addEventListener('keydown', e => {
+  if (!S || $('quiz').classList.contains('hidden') || e.target.tagName === 'INPUT') return;
+  const k = e.key.toUpperCase();
+  let pos = L.indexOf(k); if (pos < 0 && /^[1-5]$/.test(k)) pos = +k - 1;
+  const it = S.items[S.i];
+  if (pos >= 0 && pos < it.order.length) choose(it.order[pos]);
+  else if (e.key === 'ArrowLeft') go(-1);
+  else if (e.key === 'ArrowRight') go(1);
+  else if (e.key === 'Enter') check();
+});
+(function init() {
+  const n = DATA.filter(hasKey).length;
+  $('examCount').innerHTML = [20, 30, 40, 50].filter(x => x < n).map(x => `<option value="${x}">${x} câu</option>`).join('') + `<option value="${n}">Tất cả (${n})</option>`;
+  $('examCount').value = '40';
+  studyInfo();
+})();
+</script>
+</body>
+</html>
